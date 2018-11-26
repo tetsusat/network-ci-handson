@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<topology xmlns="http://www.cisco.com/VIRL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="0.95" xsi:schemaLocation="http://www.cisco.com/VIRL https://raw.github.com/CiscoVIRL/schema/v0.95/virl.xsd">
+    <extensions>
+        <entry key="management_network" type="String">flat</entry>
+        <entry key="management_lxc" type="Boolean">false</entry>
+    </extensions>
+    <node name="iosv-1" type="SIMPLE" subtype="IOSv" location="205,142">
+        <extensions>
+            <entry key="ansible_group" type="String">routers</entry>
+            <entry key="config" type="String">
+hostname iosv-1
+!
+vrf definition Mgmt-intf
+!
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+no ip domain lookup
+ip domain name virl.info
+crypto key generate rsa modulus 768
+ip ssh server algorithm authentication password
+username cisco privilege 15 secret cisco
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+interface Loopback0
+  description Loopback
+  ip address 1.1.1.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+  vrf forwarding Mgmt-intf
+  no ip address
+  no shutdown
+</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1"/>
+    </node>
+    <node name="iosv-2" type="SIMPLE" subtype="IOSv" location="486,152">
+        <extensions>
+            <entry key="ansible_group" type="String">routers</entry>
+            <entry key="config" type="String">
+hostname iosv-2
+!
+vrf definition Mgmt-intf
+!
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable password cisco
+no ip domain lookup
+ip domain name virl.info
+crypto key generate rsa modulus 768
+ip ssh server algorithm authentication password
+username cisco privilege 15 secret cisco
+line vty 0 4
+ transport input ssh telnet
+ exec-timeout 720 0
+ password cisco
+ login local
+line con 0
+ password cisco
+!
+interface Loopback0
+  description Loopback
+  ip address 2.2.2.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+  vrf forwarding Mgmt-intf
+  no ip address
+  no shutdown
+</entry>
+            <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet0/1"/>
+    </node>
+    <annotations/>
+    <connection dst="/virl:topology/virl:node[2]/virl:interface[1]" src="/virl:topology/virl:node[1]/virl:interface[1]"/>
+</topology>

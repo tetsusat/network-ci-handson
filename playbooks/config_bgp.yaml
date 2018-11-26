@@ -1,0 +1,28 @@
+---
+- name: Config BGP
+  hosts: routers
+  connection: network_cli
+
+  tasks:
+    - name: configure wan interface
+      ios_config:
+        lines:
+          - description test interface
+          - ip address {{ local_wan_ip }} 255.255.255.0
+          - no shutdown
+        parents: interface {{ wan_intf }}
+
+    - name: configure loopback interface
+      ios_config:
+        lines:
+          - ip address {{ local_loop_ip }} 255.255.255.255
+        parents: interface Loopback 0
+
+    - name: configure bgp settings
+      ios_config:
+        lines:
+          - neighbor {{ remote_wan_ip }} remote-as {{ remote_as }}
+          - network {{ local_loop_ip }} mask 255.255.255.255
+        parents: router bgp {{ local_as }}
+        before: no router bgp {{ local_as }}
+        match: exact

@@ -1,0 +1,6 @@
+wan_intf: GigabitEthernet0/1
+local_loop_ip: 1.1.1.1
+local_wan_ip: 192.168.12.1
+remote_wan_ip: 192.168.12.2
+local_as: 1
+remote_as: 1
