@@ -40,6 +40,9 @@ interface GigabitEthernet0/0
   vrf forwarding Mgmt-intf
   no ip address
   no shutdown
+!
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+end
 </entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
         </extensions>
@@ -81,6 +84,9 @@ interface GigabitEthernet0/0
   vrf forwarding Mgmt-intf
   no ip address
   no shutdown
+!
+ip route vrf Mgmt-intf 0.0.0.0 0.0.0.0 {{ gateway }}
+end
 </entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
         </extensions>
