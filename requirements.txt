@@ -1,0 +1,4 @@
+ansible==2.6.1
+virlutils==0.8.4
+pyats
+genie
